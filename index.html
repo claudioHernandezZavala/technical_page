@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./style.css" type="text/css" />
+    <title>Technical page</title>
+  </head>
+
+  <body>
+    <nav id="navbar">
+      <img src="./cpic.png" alt="" id="main-pic" />
+      <header id="hn">Flutter documentation</header>
+      <ul>
+        <a class="nav-link" href="#Containers">Containers</a>
+        <a   class="nav-link" nav-link href="#Rows_and_Columns">Rows and Columns</a>
+        <a   class="nav-link" nav-link href="#GestureDetector">GestureDetector</a>
+
+        <a  class="nav-link" href="#Image">Image</a>
+        <a  class="nav-link"  href="#Scaffold">Scaffold</a>
+
+       
+      </ul>
+    </nav>
+    <main id="main-doc">
+      <section class="main-section" id="Containers">
+        <header>Containers</header>
+        <p>
+          Since Container combines a number of other widgets each with their own
+          layout behavior, Container's layout behavior is somewhat complicated.
+          Summary: Container tries, in order: to honor alignment, to size itself
+          to the child, to honor the width, height, and constraints, to expand
+          to fit the parent, to be as small as possible. More specifically: If
+          the widget has no child, no height, no width, no constraints, and the
+          parent provides unbounded constraints, then Container tries to size as
+          small as possible. If the widget has no child and no alignment, but a
+          height, width, or constraints are provided, then the Container tries
+          to be as small as possible given the combination of those constraints
+          and the parent's constraints. If the widget has no child, no height,
+          no width, no constraints, and no alignment, but the parent provides
+          bounded constraints, then Container expands to fit the constraints
+          provided by the parent. If the widget has an alignment, and the parent
+          provides unbounded constraints, then the Container tries to size
+          itself around the child. If the widget has an alignment, and the
+          parent provides bounded constraints, then the Container tries to
+          expand to fit the parent, and then positions the child within itself
+          as per the alignment. Otherwise, the widget has a child but no height,
+          no width, no constraints, and no alignment, and the Container passes
+          the constraints from the parent to the child and sizes itself to match
+          the child. The margin and padding properties also affect the layout,
+          as described in the documentation for those properties. (Their effects
+          merely augment the rules described above.) The decoration can
+          implicitly increase the padding (e.g. borders in a BoxDecoration
+          contribute to the padding); see Decoration.padding.
+        </p>
+        <div class="code-container">
+          <pre>
+                    <code>Center(
+                        child: Container(
+                          margin: const EdgeInsets.all(10.0),
+                          color: Colors.amber[600],
+                          width: 48.0,
+                          height: 48.0,
+                        ),
+                      )</code>
+                </pre>
+        </div>
+        <p>Another example of this is</p>
+        <div class="code-container">
+          <pre>
+                    <code>Container(
+                        constraints: BoxConstraints.expand(
+                          height: Theme.of(context).textTheme.headline4!.fontSize! * 1.1 + 200.0,
+                        ),
+                        padding: const EdgeInsets.all(8.0),
+                        color: Colors.blue[600],
+                        alignment: Alignment.center,
+                        child: Text('Hello World',
+                          style: Theme.of(context)
+                              .textTheme
+                              .headline4!
+                              .copyWith(color: Colors.white)),
+                        transform: Matrix4.rotationZ(0.1),
+                      )</code>
+
+                </pre>
+        </div>
+      </section>
+      <section class="main-section" id="Rows_and_Columns">
+        <header>Rows and Columns</header>
+        <h2>Row</h2>
+        <p>
+          You control how a row or column aligns its children using the
+          mainAxisAlignment and crossAxisAlignment properties. For a row, the
+          main axis runs horizontally and the cross axis runs vertically. For a
+          column, the main axis runs vertically and the cross axis runs
+          horizontally. The MainAxisAlignment and CrossAxisAlignment classes
+          offer a variety of constants for controlling alignment. Note: When you
+          add images to your project, you need to update the pubspec.yaml file
+          to access them—this example uses Image.asset to display the images.
+          For more information, see this example’s pubspec.yaml file or Adding
+          assets and images. You don’t need to do this if you’re referencing
+          online images using Image.network. In the following example, each of
+          the 3 images is 100 pixels wide. The render box (in this case, the
+          entire screen) is more than 300 pixels wide, so setting the main axis
+          alignment to spaceEvenly divides the free horizontal space evenly
+          between, before, and after each image.
+        </p>
+        <div class="code-container">
+          <pre>
+                <code>Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Image.asset('images/pic1.jpg'),
+                      Image.asset('images/pic2.jpg'),
+                      Image.asset('images/pic3.jpg'),
+                    ],
+                  );</code>
+            </pre>
+        </div>
+        <h2>Columns</h2>
+        <p>
+          Columns work the same way as rows. The following example shows a
+          column of 3 images, each is 100 pixels high. The height of the render
+          box (in this case, the entire screen) is more than 300 pixels, so
+          setting the main axis alignment to spaceEvenly divides the free
+          vertical space evenly between, above, and below each image.
+        </p>
+        <div class="code-container">
+          <pre>
+                    <code>Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          Image.asset('images/pic1.jpg'),
+                          Image.asset('images/pic2.jpg'),
+                          Image.asset('images/pic3.jpg'),
+                        ],
+                      );</code>
+                </pre>
+        </div>
+      </section>
+      <section class="main-section" id="GestureDetector">
+        <header>GestureDetector</header>
+        <p>
+          A widget that detects gestures. Attempts to recognize gestures that
+          correspond to its non-null callbacks. If this widget has a child, it
+          defers to that child for its sizing behavior. If it does not have a
+          child, it grows to fit the parent instead. By default a
+          GestureDetector with an invisible child ignores touches; this behavior
+          can be controlled with behavior. GestureDetector also listens for
+          accessibility events and maps them to the callbacks. To ignore
+          accessibility events, set excludeFromSemantics to true. See
+          <a href="flutter.dev/gestures/" target="_blank"
+            >flutter.dev/gestures/</a
+          >
+          for additional information. Material design applications typically
+          react to touches with ink splash effects. The InkWell class implements
+          this effect and can be used in place of a GestureDetector for handling
+          taps.
+        </p>
+        <div class="code-container">
+          <pre>
+                    <code>// The GestureDetector wraps the button.
+                        GestureDetector(
+                          // When the child is tapped, show a snackbar.
+                          onTap: () {
+                            const snackBar = SnackBar(content: Text('Tap'));
+                        
+                            ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                          },
+                          // The custom button
+                          child: Container(
+                            padding: const EdgeInsets.all(12.0),
+                            decoration: BoxDecoration(
+                              color: Colors.lightBlue,
+                              borderRadius: BorderRadius.circular(8.0),
+                            ),
+                            child: const Text('My Button'),
+                          ),
+                        )</code>
+                </pre>
+        </div>
+      </section>
+      <section class="main-section" id="Image">
+        <header>Image</header>
+        <p>You can display diferrent images such as</p>
+        <ul>
+          <li>Image.asset</li>
+          <li>Image.network</li>
+          <li>Image.file</li>
+          <li>Image.memory</li>
+        </ul>
+        <p>You can use an image provider such as</p>
+        <ul>
+          <li>AssetImage</li>
+          <li>NetworkImage</li>
+          <li>FileImage</li>
+          <li>MemoryImage</li>
+        </ul>
+        <p>
+          The Image.asset, Image.network, Image.file, and Image.memory
+          constructors allow a custom decode size to be specified through
+          cacheWidth and cacheHeight parameters. The engine will decode the
+          image to the specified size, which is primarily intended to reduce the
+          memory usage of ImageCache. In the case where a network image is used
+          on the Web platform, the cacheWidth and cacheHeight parameters are
+          ignored as the Web engine delegates image decoding of network images
+          to the Web, which does not support custom decode sizes.
+        </p>
+        <div class="code-container">
+          <pre>
+        <code>-Image.network('https://flutter.github.io/assets-for-api-docs/assets/widgets/owl-2.jpg')
+         </code>
+        </pre>
+        </div>
+
+        <div class="code-container">
+          <pre>
+            <code>-const Image(image: NetworkImage('https://flutter.github.io/assets-for-api-docs/assets/widgets/owl.jpg'),
+               )</code></pre>
+        </div>
+      </section>
+      <section class="main-section" id="Scaffold">
+        <header>Scaffold</header>
+        <p>Implements the basic material design visual layout structure.
+
+            This class provides APIs for showing drawers and bottom sheets.
+            
+            To display a persistent bottom sheet, obtain the ScaffoldState for the current BuildContext via Scaffold.of and use the ScaffoldState.showBottomSheet function.</p>
+            <div class="code-container">
+                <pre>
+              <code>import 'package:flutter/material.dart';
+
+                void main() => runApp(const MyApp());
+                
+                class MyApp extends StatelessWidget {
+                  const MyApp({Key? key}) : super(key: key);
+                
+                  static const String _title = 'Flutter Code Sample';
+                
+                  @override
+                  Widget build(BuildContext context) {
+                    return const MaterialApp(
+                      title: _title,
+                      home: MyStatefulWidget(),
+                    );
+                  }
+                }
+                
+                class MyStatefulWidget extends StatefulWidget {
+                  const MyStatefulWidget({Key? key}) : super(key: key);
+                
+                  @override
+                  State<MyStatefulWidget> createState() => _MyStatefulWidgetState();
+                }
+                
+                class _MyStatefulWidgetState extends State<MyStatefulWidget> {
+                  int _count = 0;
+                
+                  @override
+                  Widget build(BuildContext context) {
+                    return Scaffold(
+                      appBar: AppBar(
+                        title: const Text('Sample Code'),
+                      ),
+                      body: Center(child: Text('You have pressed the button $_count times.')),
+                      floatingActionButton: FloatingActionButton(
+                        onPressed: () => setState(() => _count++),
+                        tooltip: 'Increment Counter',
+                        child: const Icon(Icons.add),
+                      ),
+                    );
+                  }
+                }
+                
+               </code>
+              </pre>
+              </div>
+            
+              <p>To create a local project with this code sample, run:
+                flutter create --sample=material.Scaffold.1 mysample</p>
+            
+
+      </section>
+    </main>
+  </body>
+</html>
